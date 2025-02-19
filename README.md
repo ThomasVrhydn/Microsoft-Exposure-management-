@@ -1,6 +1,6 @@
 A repo of all the use cases in Enterprise Exposure Graph:
 
-- Basic query
+- Fundamentals KQL
 - Get all Owners roles in Azure
 - Get all Owners and Contributer roles
 - Get all roles on managed identities
