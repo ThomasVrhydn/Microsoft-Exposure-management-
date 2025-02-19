@@ -2,4 +2,4 @@ ExposureGraphEdges
 | distinct EdgeLabel
 
 ExposureGraphNodes
-| distint NodesLabel
+| distinct NodesLabel
