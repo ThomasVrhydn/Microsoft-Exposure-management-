@@ -1,0 +1,8 @@
+ExposureGraphEdges
+| extend d = parse_json(EdgeProperties)
+| extend Roles = d.rawData.permissions.roles
+| mv-expand Roles
+| extend Actions = Roles.actions
+| extend RoleName = Roles.name
+| where RoleName contains  "Owner"
+| project  SourceNodeName, TargetNodeLabel, RoleName, Actions
