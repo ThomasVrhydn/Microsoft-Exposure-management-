@@ -1,0 +1,8 @@
+ExposureGraphEdges
+| make-graph SourceNodeId --> TargetNodeId with ExposureGraphNodes on NodeId
+| graph-match (NodeOauthApp)-[CanAuthenticateAs]->(NodeServicePrincipal)-[HasPermissionsTo]->(NodeGraph) 
+ where 
+            CanAuthenticateAs.EdgeLabel =~ "can authenticate as" and
+            HasPermissionsTo.EdgeLabel =~  "has permissions to" and
+            and NodeGraph.NodeName =~ "Microsoft Graph"
+      project NodeOauthApp.NodeName,NodeOauthApp,CanAuthenticateAs.EdgeLabel,NodeServicePrincipal,HasPermissionsTo,NodeGraph.NodeName, NodeGraph.NodeLabel     
