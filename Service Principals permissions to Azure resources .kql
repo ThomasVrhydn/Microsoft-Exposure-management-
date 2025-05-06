@@ -1,0 +1,30 @@
+ExposureGraphEdges
+| make-graph SourceNodeId --> TargetNodeId with ExposureGraphNodes on NodeId
+| graph-match (NodeOauthApp)-[CanAuthenticateAs]->(NodeServicePrincipal)-[HasPermissionsTo]->(NodeGraph) 
+ where 
+            CanAuthenticateAs.EdgeLabel =~ "can authenticate as" and
+            HasPermissionsTo.EdgeLabel =~  "has permissions to" and
+           NodeGraph.NodeLabel =~ "subscriptions"
+      project NodeOauthApp.NodeName,NodeOauthApp,CanAuthenticateAs.EdgeLabel,NodeServicePrincipal,HasPermissionsTo.EdgeProperties.rawData.permissions.roles,NodeGraph.NodeName, NodeGraph.NodeLabel     
+
+
+ExposureGraphEdges
+| make-graph SourceNodeId --> TargetNodeId with ExposureGraphNodes on NodeId
+| graph-match (NodeOauthApp)-[CanAuthenticateAs]->(NodeServicePrincipal)-[HasPermissionsTo]->(NodeGraph) 
+ where 
+            CanAuthenticateAs.EdgeLabel =~ "can authenticate as" and
+            HasPermissionsTo.EdgeLabel =~  "has permissions to" and
+           NodeGraph.NodeLabel =~ "subscriptions" and 
+           (HasPermissionsTo.EdgeProperties.rawData.permissions.roles contains "owner" or HasPermissionsTo.EdgeProperties.rawData.permissions.roles contains "contributor")
+      project NodeOauthApp.NodeName,NodeOauthApp,CanAuthenticateAs.EdgeLabel,NodeServicePrincipal,HasPermissionsTo.EdgeProperties.rawData.permissions.roles,NodeGraph.NodeName, NodeGraph.NodeLabel    
+
+ExposureGraphEdges
+| make-graph SourceNodeId --> TargetNodeId with ExposureGraphNodes on NodeId
+| graph-match (NodeUser)-[HasRoleOn]->(NodeOauthApp)-[CanAuthenticateAs]->(NodeServicePrincipal)-[HasPermissionsTo]->(NodeGraph) 
+ where 
+             HasRoleOn.EdgeLabel =~ "has role on" and
+            CanAuthenticateAs.EdgeLabel =~ "can authenticate as" and
+            HasPermissionsTo.EdgeLabel =~  "has permissions to" and
+           NodeGraph.NodeLabel =~ "subscriptions" and 
+           (HasPermissionsTo.EdgeProperties.rawData.permissions.roles contains "owner" or HasPermissionsTo.EdgeProperties.rawData.permissions.roles contains "contributor")
+      project NodeUser.NodeName, HasRoleOn, NodeOauthApp.NodeName,NodeOauthApp,CanAuthenticateAs.EdgeLabel,NodeServicePrincipal,HasPermissionsTo.EdgeProperties.rawData.permissions.roles,NodeGraph.NodeName, NodeGraph.NodeLabel
