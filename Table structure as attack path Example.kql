@@ -1,0 +1,6 @@
+ExposureGraphEdges
+| make-graph SourceNodeId --> TargetNodeId with ExposureGraphNodes on NodeId
+| graph-match (SourceNode)-[edges*3..4]->(TargetNode)
+where all(edges, EdgeLabel in ("has credentials of", "member of", "Can authenticate to")) and SourceNode.NodeLabel == "device"
+project SourceNode.NodeName,Path = strcat_array(map(edges, strcat(EdgeLabel, " -> ", TargetNodeName)), " -> "),TargetNode.NodeName,strcat_array(map(edges, SourceNodeName), " -> "),edges.EdgeLabel, edges.SourceNodeName, edges.TargetNodeName, SourceNode.NodeLabel , SourceNode.NodeName, SourceNode.NodeProperties
+|limit 10 
